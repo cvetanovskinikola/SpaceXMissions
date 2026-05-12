@@ -1,3 +1,30 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+  {
+    path: '',
+    redirectTo: '/spacex',
+    pathMatch: 'full'
+  },
+  {
+    path: 'signin',
+    loadComponent: () =>
+      import('./features/auth/signin/signin.component').then(m => m.SignInComponent)
+  },
+  {
+    path: 'signup',
+    loadComponent: () =>
+      import('./features/auth/signup/signup.component').then(m => m.SignUpComponent)
+  },
+  {
+    path: 'spacex',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/spacex/spacex.component').then(m => m.SpaceXComponent)
+  },
+  {
+    path: '**',
+    redirectTo: '/spacex'
+  }
+];

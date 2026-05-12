@@ -52,7 +52,7 @@ namespace SpaceXProject.API.Services.Implementations
 
             if (user is null || !BCrypt.Net.BCrypt.Verify(request.Password, user.HashedPassword))
             {
-                throw new InvalidCredentialException();
+                throw new InvalidCredentialsException();
             }
 
             return BuildAuthResponse(user);
