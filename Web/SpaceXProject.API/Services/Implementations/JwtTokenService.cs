@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using SpaceXProject.API.Dtos;
 using SpaceXProject.API.Models;
 using SpaceXProject.API.Services.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
@@ -16,7 +17,7 @@ namespace SpaceXProject.API.Services.Implementations
             _configuration = configuration;
         }
 
-        public (string Token, DateTime ExpiresAtUtc) GenerateToken(User user)
+        public TokenDto GenerateToken(User user)
         {
             var jwtSection = _configuration.GetSection("Jwt");
             var secret = jwtSection["Secret"]
@@ -45,7 +46,11 @@ namespace SpaceXProject.API.Services.Implementations
                 expires: expires,
                 signingCredentials: creds);
 
-            return (new JwtSecurityTokenHandler().WriteToken(token), expires);
+            return new TokenDto
+            {
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                ExpiresAtUtc = expires
+            };
         }
     }
 

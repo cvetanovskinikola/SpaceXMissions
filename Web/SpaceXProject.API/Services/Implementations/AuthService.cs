@@ -60,12 +60,12 @@ namespace SpaceXProject.API.Services.Implementations
 
         private AuthResponse BuildAuthResponse(User user)
         {
-            var (token, expires) = _jwt.GenerateToken(user);
+            TokenDto tokenDto = _jwt.GenerateToken(user);
 
             return new AuthResponse
             {
-                Token = token,
-                ExpiresAtUtc = expires,
+                Token = tokenDto.Token,
+                ExpiresAtUtc = tokenDto.ExpiresAtUtc,
                 User = new UserDto
                 {
                     Id = user.Id,

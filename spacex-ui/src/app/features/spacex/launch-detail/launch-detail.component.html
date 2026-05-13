@@ -1,0 +1,88 @@
+<article class="launch-detail">
+  <header class="launch-header">
+    <div class="patch-wrapper">
+      <img
+        *ngIf="launch.patchImageUrl; else noPatch"
+        [src]="launch.patchImageUrl"
+        [alt]="launch.name + ' mission patch'"
+        class="patch">
+      <ng-template #noPatch>
+        <div class="patch-placeholder">
+          <mat-icon>rocket_launch</mat-icon>
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="launch-title">
+      <h2>{{ launch.name }}</h2>
+      <p class="flight-number">Flight #{{ launch.flightNumber }}</p>
+
+      <mat-chip-set>
+        <mat-chip *ngIf="launch.upcoming" highlighted color="primary">
+          <mat-icon matChipAvatar>schedule</mat-icon>
+          Upcoming
+        </mat-chip>
+        <mat-chip *ngIf="!launch.upcoming && launch.success === true" highlighted color="primary">
+          <mat-icon matChipAvatar>check_circle</mat-icon>
+          Successful
+        </mat-chip>
+        <mat-chip *ngIf="!launch.upcoming && launch.success === false" highlighted color="warn">
+          <mat-icon matChipAvatar>error</mat-icon>
+          Failed
+        </mat-chip>
+        <mat-chip *ngIf="!launch.upcoming && launch.success === null">
+          <mat-icon matChipAvatar>help</mat-icon>
+          Unknown
+        </mat-chip>
+      </mat-chip-set>
+    </div>
+  </header>
+
+  <section class="launch-meta">
+    <p class="date">
+      <mat-icon>event</mat-icon>
+      {{ launch.dateUtc | date:'fullDate' }} at
+      {{ launch.dateUtc | date:'shortTime' }} UTC
+    </p>
+  </section>
+
+  <section *ngIf="launch.details" class="launch-details">
+    <h3>Mission details</h3>
+    <p>{{ launch.details }}</p>
+  </section>
+
+  <section *ngIf="!launch.details" class="launch-details muted">
+    <p>No mission details available.</p>
+  </section>
+
+  <footer class="launch-links">
+    <a
+      *ngIf="launch.webcastUrl"
+      mat-stroked-button
+      color="primary"
+      [href]="launch.webcastUrl"
+      target="_blank"
+      rel="noopener">
+      <mat-icon>play_circle</mat-icon>
+      Watch webcast
+    </a>
+    <a
+      *ngIf="launch.articleUrl"
+      mat-stroked-button
+      [href]="launch.articleUrl"
+      target="_blank"
+      rel="noopener">
+      <mat-icon>article</mat-icon>
+      Article
+    </a>
+    <a
+      *ngIf="launch.wikipediaUrl"
+      mat-stroked-button
+      [href]="launch.wikipediaUrl"
+      target="_blank"
+      rel="noopener">
+      <mat-icon>menu_book</mat-icon>
+      Wikipedia
+    </a>
+  </footer>
+</article>

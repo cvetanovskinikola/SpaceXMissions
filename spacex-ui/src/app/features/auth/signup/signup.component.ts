@@ -16,6 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { MatIconModule } from '@angular/material/icon';
 
 /**
  * Password must have upper, lower, and a digit.
@@ -45,7 +46,8 @@ function passwordComplexity(): ValidatorFn {
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
+    MatIconModule
   ],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']

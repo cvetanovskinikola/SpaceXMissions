@@ -1,5 +1,4 @@
 ﻿using SpaceXProject.API.Exceptions;
-using System.Security.Authentication;
 using System.Text.Json;
 
 namespace SpaceXProject.API.Middlewares
@@ -23,15 +22,6 @@ namespace SpaceXProject.API.Middlewares
             {
                 await _next(context);
             }
-            catch (ValidationException ex)
-            {
-                await WriteJson(context, StatusCodes.Status400BadRequest, new
-                {
-                    title = "Validation failed",
-                    status = 400,
-                    errors = ex.Errors
-                });
-            }
             catch (EmailAlreadyExistsException ex)
             {
                 await WriteJson(context, StatusCodes.Status409Conflict, new
@@ -47,6 +37,15 @@ namespace SpaceXProject.API.Middlewares
                 {
                     title = "Authentication failed",
                     status = 401,
+                    detail = ex.Message
+                });
+            }
+            catch (SpaceXApiException ex)
+            {
+                await WriteJson(context, StatusCodes.Status502BadGateway, new
+                {
+                    title = "Service unavailable",
+                    status = 502,
                     detail = ex.Message
                 });
             }

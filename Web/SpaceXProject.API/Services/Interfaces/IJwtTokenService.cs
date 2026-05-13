@@ -1,9 +1,10 @@
-﻿using SpaceXProject.API.Models;
+﻿using SpaceXProject.API.Dtos;
+using SpaceXProject.API.Models;
 
 namespace SpaceXProject.API.Services.Interfaces
 {
     public interface IJwtTokenService
     {
-        (string Token, DateTime ExpiresAtUtc) GenerateToken(User user);
+        TokenDto GenerateToken(User user);
     }
 }

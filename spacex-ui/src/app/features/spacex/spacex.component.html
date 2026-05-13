@@ -1,4 +1,74 @@
-<div class="placeholder">
-  <h2>SpaceX Missions</h2>
-  <button mat-raised-button color="warn" (click)="signOut()">Sign out</button>
+<mat-toolbar color="primary" class="app-toolbar">
+  <mat-icon>rocket_launch</mat-icon>
+  <span class="title">SpaceX Missions</span>
+  <span class="spacer"></span>
+  <span *ngIf="authService.currentUser$ | async as user" class="user-greeting">
+    Hi, {{ user.firstName }}
+  </span>
+  <button mat-button (click)="signOut()">
+    <mat-icon>logout</mat-icon>
+    Sign out
+  </button>
+</mat-toolbar>
+
+<div class="page">
+  <mat-tab-group
+    animationDuration="200ms"
+    (selectedTabChange)="onTabChange($event)">
+    <mat-tab label="Latest"></mat-tab>
+    <mat-tab label="Upcoming"></mat-tab>
+    <mat-tab label="Past"></mat-tab>
+  </mat-tab-group>
+
+  <div class="content">
+    <div *ngIf="loading" class="state-message">
+      <mat-spinner diameter="48"></mat-spinner>
+      <p>Loading missions…</p>
+    </div>
+
+    <div *ngIf="!loading && error" class="state-message error">
+      <mat-icon>error_outline</mat-icon>
+      <p>{{ error }}</p>
+    </div>
+
+    <div
+      *ngIf="!loading && !error && launches.length === 0"
+      class="state-message">
+      <mat-icon>inbox</mat-icon>
+      <p>No missions to show.</p>
+    </div>
+
+    <div
+      *ngIf="!loading && !error && selectedType === MissionType.Latest && selectedLaunch"
+      class="single-detail">
+      <app-launch-detail [launch]="selectedLaunch"></app-launch-detail>
+    </div>
+
+    <div
+      *ngIf="!loading && !error && selectedType !== MissionType.Latest && launches.length > 0"
+      class="master-detail">
+
+      <aside class="master">
+        <mat-nav-list>
+          <a
+            mat-list-item
+            *ngFor="let launch of launches"
+            [class.selected]="launch.id === selectedLaunch?.id"
+            (click)="onLaunchSelected(launch)">
+            <span matListItemTitle>{{ launch.name }}</span>
+            <span matListItemLine>
+              {{ launch.dateUtc | date:'mediumDate' }}
+            </span>
+          </a>
+        </mat-nav-list>
+      </aside>
+
+      <main class="detail">
+        <app-launch-detail
+          *ngIf="selectedLaunch"
+          [launch]="selectedLaunch">
+        </app-launch-detail>
+      </main>
+    </div>
+  </div>
 </div>

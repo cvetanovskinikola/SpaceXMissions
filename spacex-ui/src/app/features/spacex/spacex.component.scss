@@ -1,10 +1,119 @@
-.placeholder {
-  max-width: 800px;
-  margin: 48px auto;
-  padding: 24px;
-  text-align: center;
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #fafafa;
 }
 
-button {
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  .title {
+    margin-left: 12px;
+    font-weight: 500;
+  }
+
+  .spacer {
+    flex: 1;
+  }
+
+  .user-greeting {
+    margin-right: 16px;
+    font-size: 14px;
+    opacity: 0.85;
+  }
+}
+
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px 24px;
+}
+
+mat-tab-group {
   margin-top: 16px;
+}
+
+.content {
+  margin-top: 16px;
+  background: white;
+  border-radius: 8px;
+  min-height: 480px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.state-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+  gap: 12px;
+  color: rgba(0, 0, 0, 0.6);
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 15px;
+  }
+
+  &.error {
+    color: #d32f2f;
+  }
+}
+
+.master-detail {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  min-height: 480px;
+
+  .master {
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+    max-height: 70vh;
+    overflow-y: auto;
+
+    mat-nav-list a.selected {
+      background: rgba(0, 0, 0, 0.04);
+    }
+  }
+
+  .detail {
+    overflow-y: auto;
+    max-height: 70vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .master-detail {
+    grid-template-columns: 1fr;
+
+    .master {
+      border-right: none;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      max-height: 240px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .app-toolbar {
+    mat-icon {
+      font-size: 20px;
+    }
+
+    .title {
+      margin-left: 8px;
+      font-size: 14px;
+    }
+
+    .user-greeting {
+      display: none;
+    }
+  }
 }

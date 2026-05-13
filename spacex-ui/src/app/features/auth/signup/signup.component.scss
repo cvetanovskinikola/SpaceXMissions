@@ -7,6 +7,26 @@
   background: #fafafa;
 }
 
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+
+  mat-icon {
+    color: #1976d2;
+  }
+
+  .app-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #1976d2;
+  }
+}
+
 .auth-card {
   width: 100%;
   max-width: 420px;

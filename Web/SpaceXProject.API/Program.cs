@@ -26,6 +26,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
+builder.Services.AddHttpClient<ISpaceXService, SpaceXService>();
+
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
