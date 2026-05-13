@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
+import { SignInComponent } from './features/auth/signin/signin.component';
 
 export const routes: Routes = [
   {
@@ -9,8 +10,7 @@ export const routes: Routes = [
   },
   {
     path: 'signin',
-    loadComponent: () =>
-      import('./features/auth/signin/signin.component').then(m => m.SignInComponent)
+    component: SignInComponent
   },
   {
     path: 'signup',
